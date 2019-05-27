@@ -25,6 +25,11 @@ class Main extends Controller {
     function anotherMainPage () {
         echo 'Works!';
     }
+    
+    public static function r404 () {
+    	header('HTTP/1.0 404 Not Found');
+    }
+
 
 }
 
