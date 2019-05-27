@@ -1,3 +1,15 @@
+#My changes:
+
+Allow hyphens in the url. (Examples: localhost/page-1, localhost/page/a-b, localhost/page-1/a-b, ...)
+
+Adding the 404 function.
+
+Return a 404 page if the number of arguments is not sufficient or greater.
+
+If the route is empty, set "main".
+If the route is unknown, return 404.
+
+
 ```
 ├── app                           # Main MVC file structure directory
 │   ├── controllers               # Controllers directory
