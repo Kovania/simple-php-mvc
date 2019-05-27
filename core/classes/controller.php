@@ -12,6 +12,9 @@ abstract class Controller {
 
         $this->route = explode('/', URI);
 
+        $this->route[1] = str_replace('-','_',$this->route[1]);
+		$this->route[2] = str_replace('-','_',$this->route[2]);
+        
         $this->args = count($this->route);
 
         $this->router();
@@ -51,14 +54,22 @@ abstract class Controller {
     private function uriCaller ($method, $param) {
 
         for ($i = $param; $i < $this->args; $i++) {
-            $this->params[$i] = $this->route[$i];
+        	if($this->route[$i])
+            	$this->params[$i] = $this->route[$i];	
         }
 
-        if ($method == 0)
+		if ($method == 0)
             call_user_func_array(array($this, 'Index'), $this->params);
-        else
-            call_user_func_array(array($this, $this->route[$method]), $this->params);
-
+        else {
+    		$reflection = new ReflectionMethod( $this, $this->route[$method] );
+    		
+        	if(count($this->params) == $reflection->getNumberOfRequiredParameters())
+				call_user_func_array(array($this, $this->route[$method]), $this->params);
+			else {
+				require(ROOT . '/app/controllers/main.php');
+				Main::r404();
+			}
+		}
     }
 
     abstract function Index ();
