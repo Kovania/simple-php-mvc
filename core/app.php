@@ -70,19 +70,19 @@ class App {
 
     function start () {
 
-        session_name($this->config['sessionName']);
-        session_start();
-
         $route = explode('/', URI);
 
-        $route[1] = strtolower($route[1]);
+        $route[1] = strtolower(str_replace('-','_',$route[1]));
 
+		if(!$route[1])
+        	$route[1] = "main";
+        	
         if (file_exists(ROOT . '/app/controllers/' . $route[1] . '.php')) {
             $this->require('/app/controllers/' . $route[1] . '.php');
             $controller = new $route[1]();
         } else {
             $this->require('/app/controllers/main.php');
-            $main = new Main();
+            Main::r404();
         }
 
     }
