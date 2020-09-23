@@ -13,7 +13,7 @@ class App {
 
     function __construct () {
 
-        define("URI", $_SERVER['REQUEST_URI']);
+        define("URI", strtok($_SERVER['REQUEST_URI'], '?'));
         define("ROOT", $_SERVER['DOCUMENT_ROOT']);
 
     }
